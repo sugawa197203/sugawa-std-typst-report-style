@@ -1,6 +1,7 @@
-#let sugawa-style = {
+#let sugawa-style(doc) = {
 	set text(
 		lang: "ja",
 		font: ("Times New Roman", "MS Gothic")
 	)
+	doc
 }
