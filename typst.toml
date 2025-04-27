@@ -1,0 +1,7 @@
+[package]
+name = "sugawa-std-typst-report-style"
+version = "0.1.0"
+entrypoint = "lib.typ"
+authors = ["sugawa197203"]
+license = "MIT"
+description = "sugawa's oreore report style"
