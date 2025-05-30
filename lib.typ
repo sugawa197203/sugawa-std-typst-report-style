@@ -1,6 +1,7 @@
 // #import "@preview/codelst:2.0.2": *
 #import "@preview/showybox:2.0.4": *
 
+
 #let use-sugawa-style(doc) = {
     set text(
         lang: "ja",
@@ -34,44 +35,68 @@
     // code block
     // inline code
     show raw.where(block: false): box.with(
-        fill: luma(240),
+        fill: luma(230),
         inset: (x: 3pt, y: 0pt),
         outset: (y: 3pt),
         radius: 2pt,
     )
 
     // code block
-    let stripe = false
+    let stripe = true
     show raw.where(block: true): it => {
-        let lines = it.text.split("\n")
+        let codelines = it.lines.map(i => context [
+            #let l = box(
+                align(left, if i.text == "" { "" } else { i }),
+                width: 100%,
+                fill: if stripe {
+                    if calc.rem(i.number, 2) == 0 { luma(210) } else { luma(230) }
+                } else {
+                    luma(230)
+                },
+                inset: (x: 0.5em, y: 0.3em),
+            )
+            #l
+        ])
+
+        let a = codelines.enumerate()
+
         grid(
-            columns: (5%, 95%),
-            fill: luma(246),
-            block(
-                width: 100%,
-                inset: (y: 0.5em),
-                grid(
-                    columns: 1,
-                    ..range(1, lines.len()).map(i => box(
-                        align(right, str(i)),
-                        width: 100%,
-                        fill: luma(240),
-                        inset: (x: 0.5em, y: 0.3em),
-                    )),
+            block(fill: luma(150), inset: 0.4em, radius: (top: 0.3em))[#it.lang],
+            grid(
+                columns: (100%, 95%),
+                fill: luma(0),
+                column-gutter: -95%,
+                table(
+                    columns: (4.8%, 95%),
+                    inset: 0pt,
+                    fill: none,
+                    stroke: none,
+                    align: horizon + right,
+                    ..codelines
+                        .enumerate()
+                        .map(((i, line)) => (
+                            table.cell(
+                                fill: if stripe {
+                                    if calc.rem(i + 1, 2) == 0 { luma(210) } else { luma(230) }
+                                } else {
+                                    luma(230)
+                                },
+                                stroke: none,
+                            )[#(i + 1)],
+                            hide(line),
+                        ))
+                        .flatten()
                 ),
-                // align(
-                //   right,
-                //   for i in range(1, lines.len()) {
-                //     str(i)
-                //     linebreak()
-                //   },
-                // ),
-            ),
-            block(
-                width: 100%,
-                inset: 0.5em,
-                it,
-            ),
+                block(
+                    width: 100%,
+                    fill: luma(230),
+                    grid(
+                        // fill: red,
+                        columns: 1,
+                        ..codelines
+                    ),
+                ),
+            )
         )
     }
 
