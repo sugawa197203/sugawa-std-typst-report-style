@@ -84,6 +84,46 @@ fn main() {
     file: "sample.cc",
 )
 
+
+コードのサイズ変更
+
+```python
+print("Hello, World!")
+```
+
+#show raw: set text(size: 7pt)
+
+```python
+print("Hello, World!")
+```
+
+#show raw: set text(size: 8pt)
+
+```python
+print("Hello, World!")
+```
+
+#itembox(
+    title: "Rust コード",
+    ```rust
+    fn main() {
+        let max_number = 1000;
+        let mut prime_numbers = Vec::new();
+        let mut numbers: Vec<_> = (2..=max_number).collect();
+
+        while let Some(&n) = numbers.first() {
+            if n * n > max_number {
+                break;
+            }
+            prime_numbers.push(n);numbers = numbers.iter().filter(|&x| x % n != 0).cloned().collect();
+        }
+        prime_numbers.append(&mut numbers);
+        println!("{:?}", prime_numbers);
+    }
+
+    ```,
+)
+
 = 数式
 
 #set math.equation(numbering: "(1)")
