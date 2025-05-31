@@ -84,6 +84,13 @@ fn main() {
     file: "sample.cc",
 )
 
+#sourcefile(
+    caption: "ソースファイル例2",
+    ref: <p3>,
+    lang: "cpp",
+    file: read("sample.cc"),
+)
+
 
 コードのサイズ変更
 

@@ -153,11 +153,11 @@
 )
 
 // コードブロック
-#let codeblock(caption: "", ref: label(""), coderaw) = fig(
+#let codeblock(caption: "", ref: label(""), coderaw, kind: raw, supplement: "プログラム") = fig(
     caption: caption,
     ref: ref,
-    kind: raw,
-    supplement: "プログラム",
+    kind: kind,
+    supplement: supplement,
     coderaw,
 )
 
