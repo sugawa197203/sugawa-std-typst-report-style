@@ -68,11 +68,11 @@
         grid(
             align(left, block(fill: luma(200), inset: 0.4em, radius: (top: 0.3em))[#it.lang]),
             grid(
-                columns: (100%, 95%),
+                columns: (100%, 96%),
                 fill: luma(0),
-                column-gutter: -95%,
+                column-gutter: -96%,
                 table(
-                    columns: (4.8%, 95%),
+                    columns: (3.8%, 96%),
                     inset: 0pt,
                     fill: none,
                     stroke: none,
