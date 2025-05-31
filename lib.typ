@@ -46,7 +46,7 @@
     show raw.where(block: true): it => {
         let getstripe = i => {
             if stripe {
-                if calc.rem(i + 1, 2) == 0 { luma(220) } else { luma(240) }
+                if calc.rem(i + 1, 2) == 0 { luma(230) } else { luma(240) }
             } else {
                 luma(230)
             }
