@@ -8,29 +8,29 @@
         font: ("Times New Roman", "MS Mincho"),
     )
     show heading: set text(font: ("Arial", "MS Gothic"))
-    set par(first-line-indent: 1em)
     show heading: it => {
         it
         par(text(size: 0pt, ""))
     }
-    show raw: set text(font: ("JetBrains Mono", "MS Gothic"))
-
     set heading(
         numbering: (..args) => {
             [課題#numbering("1.1.1.", ..args.pos())#h(0.5em)]
         },
+        supplement: "",
     )
 
+    set par(first-line-indent: 1em)
+    show raw: set text(font: ("JetBrains Mono", "MS Gothic"))
     show figure.where(kind: table): set figure.caption(position: top)
     show figure.where(kind: image): set figure.caption(position: bottom)
     show figure.where(kind: raw): set figure.caption(position: bottom)
     show figure.where(kind: block): set figure.caption(position: top)
-
     show figure: it => {
         v(0.5em)
         it
         v(0.5em)
     }
+    show figure: set text(font: ("Arial", "MS Gothic"))
 
     // code block
     // inline code
@@ -44,15 +44,19 @@
     // code block
     let stripe = true
     show raw.where(block: true): it => {
+        let getstripe = i => {
+            if stripe {
+                if calc.rem(i + 1, 2) == 0 { luma(220) } else { luma(240) }
+            } else {
+                luma(230)
+            }
+        }
+
         let codelines = it.lines.map(i => context [
             #let l = box(
                 align(left, if i.text == "" { "" } else { i }),
                 width: 100%,
-                fill: if stripe {
-                    if calc.rem(i.number, 2) == 0 { luma(210) } else { luma(230) }
-                } else {
-                    luma(230)
-                },
+                fill: getstripe(i.number - 1),
                 inset: (x: 0.5em, y: 0.3em),
             )
             #l
@@ -60,8 +64,9 @@
 
         let a = codelines.enumerate()
 
+
         grid(
-            block(fill: luma(150), inset: 0.4em, radius: (top: 0.3em))[#it.lang],
+            align(left, block(fill: luma(200), inset: 0.4em, radius: (top: 0.3em))[#it.lang]),
             grid(
                 columns: (100%, 95%),
                 fill: luma(0),
@@ -76,11 +81,7 @@
                         .enumerate()
                         .map(((i, line)) => (
                             table.cell(
-                                fill: if stripe {
-                                    if calc.rem(i + 1, 2) == 0 { luma(210) } else { luma(230) }
-                                } else {
-                                    luma(230)
-                                },
+                                fill: getstripe(i),
                                 stroke: none,
                             )[#(i + 1)],
                             hide(line),
@@ -132,10 +133,11 @@
     #par(text(size: 0em, ""))
 ]
 
-#let fig(caption, ref, figcontent) = [
-    #figure(caption: caption)[
+// 図
+#let fig(caption: "", ref: label(""), kind: auto, supplement: auto, figcontent) = [
+    #figure(caption: caption, kind: kind, supplement: supplement)[
         #figcontent
-    ]#label(ref)
+    ] #ref
     #par(text(size: 0em, ""))
 ]
 
@@ -148,6 +150,33 @@
     ),
     frame: (title-color: white),
     body,
+)
+
+// コードブロック
+#let codeblock(caption: "", ref: label(""), coderaw) = fig(
+    caption: caption,
+    ref: ref,
+    kind: raw,
+    supplement: "プログラム",
+    coderaw,
+)
+
+// ソースファイル
+#let sourcefile(caption: "", ref: label(""), lang: "plain", file: "") = codeblock(
+    caption: caption,
+    ref: ref,
+    raw(
+        if type(file) == str { read(file) } else { file },
+        block: true,
+        lang: lang,
+    ),
+)
+
+// 画像
+#let img(imagedata: [image], caption: "", ref: label("")) = fig(
+    caption: caption,
+    ref: ref,
+    if type(imagedata) == str { image(imagedata) } else { imagedata },
 )
 
 
