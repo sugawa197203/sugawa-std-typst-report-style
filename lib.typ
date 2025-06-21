@@ -20,7 +20,7 @@
     )
 
     set par(first-line-indent: 1em)
-    show raw: set text(font: ("JetBrains Mono", "MS Gothic"))
+    show raw: set text(font: ("JetBrains Mono NL", "MS Gothic"))
     show figure.where(kind: table): set figure.caption(position: top)
     show figure.where(kind: image): set figure.caption(position: bottom)
     show figure.where(kind: raw): set figure.caption(position: bottom)
