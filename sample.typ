@@ -1,6 +1,7 @@
 #import "./lib.typ": *
 
 #show: use-sugawa-style
+#configer(midashi: "演習課題")
 
 #title(
     "TestTitle",
@@ -13,6 +14,7 @@
 
 = 見出し
 
+#configer(midashi: "課題")
 =
 
 インラインコードは `こんな` 感じで書きます。

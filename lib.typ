@@ -1,6 +1,7 @@
 // #import "@preview/codelst:2.0.2": *
 #import "@preview/showybox:2.0.4": *
 
+#let midaritext = state("midaritext", "")
 
 #let use-sugawa-style(doc) = {
     set text(
@@ -14,7 +15,7 @@
     }
     set heading(
         numbering: (..args) => {
-            [課題#numbering("1.1.1.", ..args.pos())#h(0.5em)]
+            [#midaritext.get()#numbering("1.1.1.", ..args.pos())#h(0.5em)]
         },
         supplement: "",
     )
@@ -107,7 +108,17 @@
     doc
 }
 
-#let title(titlename, yourname: "", yournumber: "", date: "", titlesize: 2.0em, yournamesize: 1.0em) = [
+#let updateMidashiText(midashi) = {
+    // headings
+    midaritext.update(m => midashi)
+}
+
+#let configer(midashi: "") = {
+    // headings
+    updateMidashiText(midashi)
+}
+
+#let title(titlename, yourname: "", yournumber: "", date: "", titlesize: 2.0em, yournamesize: 1.0em, midasi: "") = [
     #align(center)[
         #text(font: ("Arial", "MS Gothic"), titlename, size: titlesize)
     ]
