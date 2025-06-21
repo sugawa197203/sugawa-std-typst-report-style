@@ -166,7 +166,7 @@
     caption: caption,
     ref: ref,
     raw(
-        if type(file) == str { read(file) } else { file },
+        file,
         block: true,
         lang: lang,
     ),
